@@ -1,6 +1,23 @@
 # VFX-Project1-HDR
 NTU VFX 2025 Spring Project1
- 
+Author: Lee Meng-Hsueh(R13922165), Wen Wen-An(R13944053)
+
+What we have done:
+	1.  Roberston
+	2. Tone mapping - Biliteral (Bonus)
+	3. MTB alignment (Bonus)
+
+Report outline:
+
+1. Implementation of Roberston
+
+2. Implementation of Biliteral Tone-Mapping
+
+3. Implementation of MTB
+
+4. Summary of parameters
+
+5. Result 
 This method has several advantages: first, since the representation is non-parametric, the response function does not need to be assumed to have a shape described by some previously defined class of continuous functions; second, the formulation takes explicitly into account the sensor noise model; and third, the structure of the algorithm naturally uses all information available from image pixels for the estimation of response function and reconstruction of E.
 ### Problem Description
 Our goal is to reconstruct the $g$ (the inverse response curve) and then compute $E_i$  
