@@ -1,7 +1,7 @@
 import numpy as np
 import time
 import cv2
-import os
+from multiprocessing import Pool, Manager
 
 def hat_weighting_function(z, z_min=0, z_max=255):
     """Hat weighting function to give higher weights to mid-range values."""
@@ -35,7 +35,7 @@ def robertson_hdr(Z, delta_t, max_iter=10, tol=1e-5):
     start_time = time.time()
     g = np.linspace(0, 1, 256)  # Initialize g as a linear function
     g[128] = 1  # Enforce normalization
-    w = Z#hat_weighting_function(Z)
+    w = hat_weighting_function(Z)
     prev_loss = float('inf')
     
     for times in range(max_iter):
@@ -55,11 +55,29 @@ def robertson_hdr(Z, delta_t, max_iter=10, tol=1e-5):
     
     return g, E
 
+def process_channel(c, images, delta_t, height, width, hdr_image):
+    start_time = time.time()
+    print(f"----- Process {c+1} channel -----")
+    Z = np.stack([img[:, :, c] for img in images], axis=2)
+    g, E = robertson_hdr(Z.reshape(-1, len(images)), delta_t)
+    hdr_image[:, :, c] = E.reshape(height, width)
+    print(f"--- Total {(time.time() - start_time)} seconds in {c+1} channel---")
+    return (c, E.reshape(height, width))
+
 def process_hdr(images, delta_t):
     """Process three images to compute an HDR image."""
     height, width, _ = images[0].shape
     hdr_image = np.zeros((height, width, 3), dtype=np.float32)
-    
+    # 創建共享 hdr_image
+
+    # Using multiprocessing.Pool 
+    with Pool(processes=3) as pool:
+        results = pool.starmap(process_channel, [(c, images, delta_t, height, width, hdr_image) for c in range(3)])
+
+    # fill the result into hdr_image
+    for c, channel_data in results:
+        hdr_image[:, :, c] = channel_data
+    """
     for c in range(3):  # Process each color channel separately
         start_time = time.time()
         print(f"----- Process {c+1} channel -----")
@@ -67,7 +85,7 @@ def process_hdr(images, delta_t):
         g, E = robertson_hdr(Z.reshape(-1, len(images)), delta_t)
         hdr_image[:, :, c] = E.reshape(height, width)
         print("--- Total %s seconds ---" % (time.time() - start_time))
-    
+    """
     return hdr_image
 
 def tone_mapping(hdr_image):
@@ -79,10 +97,11 @@ def tone_mapping(hdr_image):
 
 def main():
     """Main function to read images, process HDR, and save the output."""
-    image_files = ["image1.JPG", "image2.JPG", "image3.JPG", "image4.JPG", "image5.JPG"]
-    images = [cv2.imread(img).astype(np.float32) for img in image_files]
+    # image_files = os.listdir("Aligned_Image")
+    image_files = ["aligned_0.jpg", "aligned_2.jpg", "aligned_3.jpg"]
+    images = [cv2.imread("Aligned_Image/"+img).astype(np.float32) for img in image_files]
     images = [(img * 255).astype(np.uint8) for img in images]
-    delta_t = np.array([(1/120), (1/60), (1/30), (1/15), (1/7)])  # Example exposure times
+    delta_t = np.array([(1/60), (1/30), (1/15)])  # Example exposure times
     
     """Compare with the built-in Library"""
     """
