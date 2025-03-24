@@ -2,7 +2,7 @@ import numpy as np
 import time
 import cv2
 import argparse
-from multiprocessing import Pool, Manager
+from multiprocessing import Pool
 
 def hat_weighting_function(z, z_min=0, z_max=255):
     """Hat weighting function to give higher weights to mid-range values."""
@@ -51,54 +51,49 @@ def robertson_hdr(Z, delta_t, max_iter=10, tol=1e-5):
             print("Coverage!!!")
             break
         prev_loss = loss
-        print(f"========= {times}th iteratoion finished =========")
+        print(f"========= {times}th iteration finished =========")
         print("--- Total %s seconds ---" % (time.time() - start_time))
     
     return g, E
 
-def process_channel(c, images, delta_t, height, width, hdr_image):
+def process_channel(c, images, delta_t, height, width):
+    """
+    分別處理每個 color channel：
+    將影像 intensities 疊成 Z，執行 robertson_hdr()，回傳 E，再重塑回 height x width。
+    """
     start_time = time.time()
     print(f"----- Process {c+1} channel -----")
     Z = np.stack([img[:, :, c] for img in images], axis=2)
     g, E = robertson_hdr(Z.reshape(-1, len(images)), delta_t)
-    hdr_image[:, :, c] = E.reshape(height, width)
     print(f"--- Total {(time.time() - start_time)} seconds in {c+1} channel---")
     return (c, E.reshape(height, width))
 
 def process_hdr(images, delta_t):
-    """Process three images to compute an HDR image."""
+    """Process HDR：從多張影像與曝光時間計算出 HDR image (float32)"""
     height, width, _ = images[0].shape
     hdr_image = np.zeros((height, width, 3), dtype=np.float32)
-    # 創建共享 hdr_image
 
-    # Using multiprocessing.Pool 
+    # 使用 multiprocessing 平行處理 3 個 channel
     with Pool(processes=3) as pool:
-        results = pool.starmap(process_channel, [(c, images, delta_t, height, width, hdr_image) for c in range(3)])
+        results = pool.starmap(process_channel, [(c, images, delta_t, height, width) for c in range(3)])
 
-    # fill the result into hdr_image
+    # 將結果填回 hdr_image
     for c, channel_data in results:
         hdr_image[:, :, c] = channel_data
-    """
-    for c in range(3):  # Process each color channel separately
-        start_time = time.time()
-        print(f"----- Process {c+1} channel -----")
-        Z = np.stack([img[:, :, c] for img in images], axis=2)
-        g, E = robertson_hdr(Z.reshape(-1, len(images)), delta_t)
-        hdr_image[:, :, c] = E.reshape(height, width)
-        print("--- Total %s seconds ---" % (time.time() - start_time))
-    """
+    
     return hdr_image
 
 def tone_mapping(hdr_image):
-    """Apply tone mapping to convert HDR to LDR."""
+    """套用 OpenCV Drago tone mapping 將 HDR 轉成 LDR"""
     tonemap = cv2.createTonemapDrago(gamma=2.2)
     ldr = tonemap.process(hdr_image)
     ldr = np.clip(ldr * 255, 0, 255).astype(np.uint8)
     return ldr
 
-def robertson():
-    parser = argparse.ArgumentParser(description="HDR image processing from given images and exposures.")
-    parser.add_argument('--images', nargs='+', required=True, help="List of image filenames (e.g., aligned_0.jpg aligned_2.jpg aligned_3.jpg)")
+def main():
+    """CLI 模式，透過 command line 輸入影像與曝光度，計算 HDR 並儲存結果"""
+    parser = argparse.ArgumentParser(description="HDR image processing using Robertson algorithm.")
+    parser.add_argument('--images', nargs='+', required=True, help="List of aligned image filenames")
     parser.add_argument('--exposures', nargs='+', required=True, type=float, help="List of exposure times (e.g., 0.0167 0.0333 0.0667)")
 
     args = parser.parse_args()
@@ -106,17 +101,7 @@ def robertson():
     if len(args.images) != len(args.exposures):
         print("Error: The number of images and exposures must match.")
         return
-    
-        """Compare with the built-in Library"""
-    """
-    calibrate = cv2.createCalibrate()
-    hdr_opencv = calibrate.process(images, delta_t)
-    cv2.imwrite("build_output.hdr", hdr_opencv.astype(np.float32))
-    print("Build-in HDR image saved as output.hdr")
-    ldr_result = tone_mapping(hdr_result)
-    cv2.imwrite("output_tonemapped.jpg", ldr_result)
-    print("Tone-mapped image saved as output_tonemapped.jpg")
-    =======End========="""
+
     images = [cv2.imread(img).astype(np.float32) for img in args.images]
     hdr_result = process_hdr(images, np.array(args.exposures, dtype=np.float32))
     cv2.imwrite("output.hdr", hdr_result.astype(np.float32))
@@ -126,17 +111,5 @@ def robertson():
     cv2.imwrite("output_tonemapped.jpg", ldr_result)
     print("Tone-mapped image saved as output_tonemapped.jpg")
 
-
-# if __name__ == "__main__":
-#     robertson()
-
-"""
-# Example usage (simulated data)
-np.random.seed(42)
-Z = np.random.randint(0, 256, (100, 5))  # 100 pixels, 5 exposures
-delta_t = np.array([1, 2, 4, 8, 16])
-
-g, E = robertson_hdr(Z, delta_t)
-print("Estimated g:", g)
-print("Estimated E:", E)
-"""
+if __name__ == "__main__":
+    main()

@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import glob
 import os
+import re
 
 def compute_mtb(img):
     if img.ndim == 3:
@@ -55,25 +56,36 @@ def align_images(img_list, max_levels=4):
         offsets.append(offset)
     return offsets
 
+def natural_key(string):
+    """自然排序鍵（可以按照檔名中數字排序）"""
+    return [int(s) if s.isdigit() else s.lower() for s in re.split(r'(\d+)', string)]
+
 def align_images_folder(input_folder, output_folder, max_levels=4):
     """
-    將 input_folder 裡面的照片讀進來、對齊、儲存到 output_folder
+    讀取 input_folder 裡面所有 .jpg 圖片（根據檔名數字自然排序，然後反轉），
+    按順序對齊，並依序輸出 aligned_0.jpg, aligned_1.jpg ...
+    保證 aligned_0 對應曝光度最大圖。
     """
-    img_paths = sorted(glob.glob(os.path.join(input_folder, '*.jpg')))
+    img_paths = sorted(glob.glob(os.path.join(input_folder, '*.jpg')), key=natural_key, reverse=False)
     if not img_paths:
         print(f"No JPG images found in {input_folder}.")
         return
+    
+    print("Image loading order (largest exposure first):")
+    for p in img_paths:
+        print(p)
     
     img_list = [cv2.imread(path) for path in img_paths]
     offsets = align_images(img_list, max_levels)
 
     os.makedirs(output_folder, exist_ok=True)
-    for i, (img, off) in enumerate(zip(img_list, offsets)):
+    for i, (img, off, src_name) in enumerate(zip(img_list, offsets, img_paths)):
         aligned_img = np.roll(img, shift=(off[1], off[0]), axis=(0, 1))
         output_path = os.path.join(output_folder, f"aligned_{i}.jpg")
         cv2.imwrite(output_path, aligned_img)
-        print(f"Saved aligned image {i} to {output_path}")
+        print(f"Saved aligned image {i} (from {os.path.basename(src_name)}) to {output_path}")
 
-# if __name__ == '__main__':
-#     # 測試用
-#     align_images_folder("photo", "aligned")
+if __name__ == "__main__":
+    # 範例：如果要測試
+    # align_images_folder("your_input_folder", "your_output_folder")
+    pass

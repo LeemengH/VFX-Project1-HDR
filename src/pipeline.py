@@ -4,7 +4,7 @@ import numpy as np
 import os
 from alignment_MTB import align_images_folder
 from tone_mapping import mapping
-from Robertson import robertson
+from Robertson import process_hdr
 
 def run_alignment(input_folder, output_folder):
     print(f"開始對齊 {input_folder} 下的圖片...")
@@ -14,7 +14,7 @@ def run_alignment(input_folder, output_folder):
 def run_hdr(image_paths, exposures):
     print(f"開始 HDR 合成...")
     images = [cv2.imread(img).astype(np.float32) for img in image_paths]
-    hdr_result = mapping(images, np.array(exposures, dtype=np.float32))
+    hdr_result = process_hdr(images, np.array(exposures, dtype=np.float32))
     output_hdr_path = "output.hdr"
     cv2.imwrite(output_hdr_path, hdr_result.astype(np.float32))
     print(f"HDR 合成完成，已儲存為 {output_hdr_path}\n")
@@ -23,7 +23,7 @@ def run_hdr(image_paths, exposures):
 def run_tonemap(hdr_file, output_file):
     print(f"開始 Tone Mapping...")
     hdr_img = cv2.imread(hdr_file, -1)
-    ldr_result = robertson(hdr_img)
+    ldr_result = mapping(hdr_img)
     cv2.imwrite(output_file, ldr_result)
     print(f"Tone Mapping 完成，已儲存為 {output_file}\n")
 
