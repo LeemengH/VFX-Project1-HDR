@@ -176,13 +176,45 @@ Our shooting device was the iPhone 16 Plus. To maintain fixed EV and ISO, we use
 ## Result
 To illustrate our results, we present the following image comparison in a 1x2 table format:
 
-Input Images(Original)| Input Images (Aligned) | Mantiuk Tone Mapping | Our bilateral tone mapping
-|-----------------------|------------------------|-----------------------------|--------------------|
-| ![Image1](Source_image/1626.jpg)   | ![Image1](Aligned_Image/aligned_4.jpg)  |
-| ![Image2](Source_image/1001.jpg)   | ![Image2](Aligned_Image/aligned_3.jpg)  |
-| ![Image3](Source_image/320.jpg)    | ![Image3](Aligned_Image/aligned_2.jpg)  |  ![Result](Result_image/GIMP_Mantiuk.png) | ![Result](Result_image/Our_tone_mapping.jpg)
-| ![Image4](Source_image/125.jpg)    | ![Image4](Aligned_Image/aligned_1.jpg)  |
-| ![Image5](Source_image/50.jpg)     | ![Image5](Aligned_Image/aligned_0.jpg)  |
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Input Images (Original)</th>
+    <th>Input Images (Aligned)</th>
+    <th>Mantiuk Tone Mapping</th>
+    <th>Our bilateral tone mapping</th>
+  </tr>
+  <tr>
+    <td><img src="Source_image/1626.jpg" width="200" alt="Image1"></td>
+    <td><img src="Aligned_Image/aligned_4.jpg" width="200" alt="Image1"></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><img src="Source_image/1001.jpg" width="200" alt="Image2"></td>
+    <td><img src="Aligned_Image/aligned_3.jpg" width="200" alt="Image2"></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><img src="Source_image/320.jpg" width="200" alt="Image3"></td>
+    <td><img src="Aligned_Image/aligned_2.jpg" width="200" alt="Image3"></td>
+    <td><img src="Result_image/GIMP_Mantiuk.png" width="200" alt="Mantiuk Tone Mapping"></td>
+    <td><img src="Result_image/Our_tone_mapping.jpg" width="200" alt="Our bilateral tone mapping"></td>
+  </tr>
+  <tr>
+    <td><img src="Source_image/125.jpg" width="200" alt="Image4"></td>
+    <td><img src="Aligned_Image/aligned_1.jpg" width="200" alt="Image4"></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><img src="Source_image/50.jpg" width="200" alt="Image5"></td>
+    <td><img src="Aligned_Image/aligned_0.jpg" width="200" alt="Image5"></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+
 ### discuss
 Base on our result,The MTB alignment part does not significantly affect the quality of our images (the average displacement is within five pixels), which might be due to our already very precise image capture. On the other hand, the tone mapping part shows a clear difference between our implementation and the open-source algorithm. Besides the overall yellowish tint in the images, there are noticeable issues in some details—for example, the "滾" character on the left is clearly overexposed, while the professional software can greatly restore the effect. Adjusting parameters in our self-implemented algorithm is particularly challenging, as there are too many parameters to modify(for exmple the gamma value,kernal size,channal factor,space sigma ETC), making it very difficult to quantify the impact of each one. Additionally, the images we selected this time are not ideal, as they have low contrast between bright and dark areas. Choosing images with higher contrast could achieve a more pronounced HDR effect.
 ## Reference:
