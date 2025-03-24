@@ -162,28 +162,25 @@ This ensures that the final LDR output has improved brightness and contrast, mak
 ### Time Complexity Analysis
 
 The most computationally intensive part of the implementation is the bilateral filtering step within the `my_bilateral_filter` function. The algorithm processes each pixel in the image using nested loops. For an image with dimensions **height × width** and a filtering window of size **diameter × diameter**, the worst-case time complexity is:
-$$
-O(height*width*diameter)
-$$
+**O(height*width*diameter)**
+
 
 This quadratic dependency on the window size means that as the **diameter** increases, the filtering step becomes significantly slower. In practice, due to the inherent nested loop structure implemented in Python without further vectorization or parallel processing, this tone mapping procedure typically requires around **5 minutes** to process a single HDR image on a standard machine.
 
 ### Conclusion
-
 We implemented a simple version of bilateral tone mapping and provided some analysis of the algorithm. 
-## Summary of parameters
-
+## Devices of parameters
+Our shooting device was the iPhone 16 Plus. To maintain fixed EV and ISO, we used the Pro Camera app for capturing. The ISO was set at 4000, the aperture at 1.6, and the focal length at 22mm. We took five photos with different shutter speeds, then combined them into an HDR image using our self-developed Robertson method, and finally applied GIMP's built-in open-source tone mapping algorithm, Mantiuk 2006, for the final mapping.
 ## Result
 To illustrate our results, we present the following image comparison in a 1x2 table format:
 
-| Input Images (Aligned) | Result HDR (After Tone Mapping) |
-|------------------------|--------------------------------|
+| Input Images (Aligned) | Mantiuk Tone Mapping) | Our bilateral tone mapping
+|------------------------|--------------------------------|-----------------|
 | ![Image1](Source_image/1626.jpg)  |
-| ![Image2](Source_image/1001.jpg)  | ![Result](Result_image/GIMP_Mantiuk.png) |
+| ![Image2](Source_image/1001.jpg)  | ![Result](Result_image/GIMP_Mantiuk.png) | ![Result](Result_image/Our_tone_mapping.jpg)
 | ![Image3](Source_image/320.jpg)  |
 | ![Image4](Source_image/125.jpg)  |
 | ![Image5](Source_image/50.jpg)  |
-
 ## Reference:
 https://pages.cs.wisc.edu/~csverma/CS899_09/s00103ed1v01y200711cgr003.pdf
 https://www.spiedigitallibrary.org/journals/journal-of-electronic-imaging/volume-12/issue-02/0000/Estimation-theoretic-approach-to-dynamic-range-enhancement-using-multiple-exposures/10.1117/1.1557695.full
