@@ -56,11 +56,15 @@ Except in very specialized situations, the camera response function is not known
 
 Robertson et al. exploit the Maximum Likelihood Method to estimate $g$. More formally,
 
-$P(E_i, g | Z_{ij}, \Delta t_j) \propto \exp \left\{ \frac{-1}{2} \sum\limits_{ij} w(Z_{ij})(g(Z_{ij}) - E_i \Delta t_j)^2 \right\}$
+$P(E_i, g | Z_{ij}, \Delta t_j) \propto exp\{ \frac{-1}{2} \sum\limits_{ij} w(Z_{ij})(g(Z_{ij}) - E_i \Delta t_j))^2\}$
 
 where $w(.)$ refers to the hat weighting function (since $Z$ may overflow $(0 \sim 255)$, we need to add some adjustments, i.e., favor the numbers near the middle)
-
-$w(z) = \begin{cases} z - Z_{min}, & \text{for } z \leq \frac{1}{2}(Z_{min}+Z_{max}) \\ Z_{max} - z, & \text{for } z > \frac{1}{2}(Z_{min}+Z_{max}) \end{cases}$
+$w(z) = \left\{  
+\begin{array}{ll}  
+z - Z_{\min}, & \text{for } z \leq \frac{1}{2}(Z_{\min}+Z_{\max}) \\  
+Z_{\max} - z, & \text{for } z > \frac{1}{2}(Z_{\min}+Z_{\max})  
+\end{array}  
+\right.$
 
 Therefore, to maximize the likelihood, we need to minimize the expression:
 
