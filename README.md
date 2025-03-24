@@ -1,23 +1,25 @@
 # VFX-Project1-HDR
-NTU VFX 2025 Spring Project1
-Author: Lee Meng-Hsueh(R13922165), Wen Wen-An(R13944053)
+## Description
 
-What we have done:
-	1. Roberston
-	2. Tone mapping - Biliteral (Bonus)
-	3. MTB alignment (Bonus)
+This repo is about NTU VFX 2025 Spring Project1.
+- Author: Lee Meng-Hsueh(R13922165), Wen Wen-An(R13944053)
 
-Report outline:
+- What we have done:
+	- Roberston
+	- Tone mapping - Biliteral (Bonus)
+	- MTB alignment (Bonus)
 
-1. Implementation of Roberston
+- Report outline:
 
-2. Implementation of Biliteral Tone-Mapping
+	1. Implementation of Roberston
 
-3. Implementation of MTB
+	2. Implementation of Biliteral Tone-Mapping
 
-4. Summary of parameters
+	3. Implementation of MTB
 
-5. Result 
+	4. Summary of parameters
+
+	5. Result 
 
 ## How to run the code
 ```bash=
