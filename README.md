@@ -17,9 +17,11 @@ This repo is about NTU VFX 2025 Spring Project1.
 
 	3. Implementation of MTB
 
-	4. Summary of parameters
+	4. devices of parameters
 
-	5. Result 
+	5. Result
+
+ 	6. Discuss 
 
 ## How to run the code
 ```bash=
@@ -181,6 +183,8 @@ Input Images(Original)| Input Images (Aligned) | Mantiuk Tone Mapping | Our bila
 | ![Image3](Source_image/320.jpg)    | ![Image3](Aligned_Image/aligned_2.jpg)  |  ![Result](Result_image/GIMP_Mantiuk.png) | ![Result](Result_image/Our_tone_mapping.jpg)
 | ![Image4](Source_image/125.jpg)    | ![Image4](Aligned_Image/aligned_1.jpg)  |
 | ![Image5](Source_image/50.jpg)     | ![Image5](Aligned_Image/aligned_0.jpg)  |
+### discuss
+Base on our result,The MTB alignment part does not significantly affect the quality of our images (the average displacement is within five pixels), which might be due to our already very precise image capture. On the other hand, the tone mapping part shows a clear difference between our implementation and the open-source algorithm. Besides the overall yellowish tint in the images, there are noticeable issues in some details—for example, the "滾" character on the left is clearly overexposed, while the professional software can greatly restore the effect. Adjusting parameters in our self-implemented algorithm is particularly challenging, as there are too many parameters to modify(for exmple the gamma value,kernal size,channal factor,space sigma ETC), making it very difficult to quantify the impact of each one. Additionally, the images we selected this time are not ideal, as they have low contrast between bright and dark areas. Choosing images with higher contrast could achieve a more pronounced HDR effect.
 ## Reference:
 https://pages.cs.wisc.edu/~csverma/CS899_09/s00103ed1v01y200711cgr003.pdf
 https://www.spiedigitallibrary.org/journals/journal-of-electronic-imaging/volume-12/issue-02/0000/Estimation-theoretic-approach-to-dynamic-range-enhancement-using-multiple-exposures/10.1117/1.1557695.full
