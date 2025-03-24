@@ -3,7 +3,7 @@ NTU VFX 2025 Spring Project1
 Author: Lee Meng-Hsueh(R13922165), Wen Wen-An(R13944053)
 
 What we have done:
-	1.  Roberston
+	1. Roberston
 	2. Tone mapping - Biliteral (Bonus)
 	3. MTB alignment (Bonus)
 
@@ -18,7 +18,7 @@ Report outline:
 4. Summary of parameters
 
 5. Result 
-This method has several advantages: first, since the representation is non-parametric, the response function does not need to be assumed to have a shape described by some previously defined class of continuous functions; second, the formulation takes explicitly into account the sensor noise model; and third, the structure of the algorithm naturally uses all information available from image pixels for the estimation of response function and reconstruction of E.
+
 ## How to run the code
 ```bash=
 git clone "this_repo"
@@ -42,9 +42,11 @@ cd VFX-Project1-HDR/src
 | Tone mapping        | `python3 pipeline.py tonemap --input output.hdr --output result.jpg`                                                                                                                                      |
 | **Full pipeline** | `python3 pipeline.py full --raw_folder ../Source_image --aligned_folder alignmented --exposures 0.02 0.008 0.003125 0.00099900099 0.00061500615`                                                            |
 
-
+# Report
 ## Implementation of Roberston
 ### Problem Description
+This method has several advantages: first, since the representation is non-parametric, the response function does not need to be assumed to have a shape described by some previously defined class of continuous functions; second, the formulation takes explicitly into account the sensor noise model; and third, the structure of the algorithm naturally uses all information available from image pixels for the estimation of response function and reconstruction of E.
+
 Our goal is to reconstruct the $g$ (the inverse response curve) and then compute $E_i$  
 * $Z_{ij} = f(E_i {\Delta} t_j)$ , where i represents i-th pixel and j represents j-th picture 
 * $X_{ij} = E_i {\Delta} t_j$ 
@@ -168,8 +170,10 @@ This quadratic dependency on the window size means that as the **diameter** incr
 ### Conclusion
 
 We implemented a simple version of bilateral tone mapping and provided some analysis of the algorithm. 
+## Summary of parameters
 
+## Result
 
-### Reference:
+## Reference:
 https://pages.cs.wisc.edu/~csverma/CS899_09/s00103ed1v01y200711cgr003.pdf
 https://www.spiedigitallibrary.org/journals/journal-of-electronic-imaging/volume-12/issue-02/0000/Estimation-theoretic-approach-to-dynamic-range-enhancement-using-multiple-exposures/10.1117/1.1557695.full
