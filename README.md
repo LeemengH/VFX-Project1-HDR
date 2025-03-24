@@ -24,12 +24,24 @@ This method has several advantages: first, since the representation is non-param
 git clone "this_repo"
 cd VFX-Project1-HDR/src
 ```
-| 功能            | 指令範例                                                                                                                                                  |
-|---------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 只做對齊         | `python pipeline.py align --input_folder [path of folder of raw image] --output_folder [folder to save alignment result]`                                                                             |
-| 只做 HDR       | `python pipeline.py hdr --images [path of photo1] [path of photo2] [path of photo3] --exposures [scatter time of photo 1] [scatter time of photo 2] [scatter time of photo 3]`               |
-| 只做 tone mapping | `python pipeline.py tonemap --input [path of HDR] --output [file name ex. result.jpg]`                                                                        |
-| 一鍵全部流程      | `python pipeline.py full --raw_folder [path of folder raw image] --aligned_folder [folder to save alignment result] --exposures [scatter time of photo1] [scatter time of photo2] [scatter time of photo3]`                                              |
+## Command Examples (General Usage)
+| Function            | Example Command                                                                                                                                                                                           |
+|---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Alignment only      | `python pipeline.py align --input_folder [path_to_raw_image_folder] --output_folder [path_to_save_alignment_results]`                                                                                     |
+| HDR only            | `python pipeline.py hdr --images [path_to_photo1] [path_to_photo2] [path_to_photo3] ... --exposures [exposure_time_1] [exposure_time_2] [exposure_time_3] ...`                                            |
+| Tone mapping only   | `python pipeline.py tonemap --input [path_to_hdr_file] --output [output_image_filename, e.g., result.jpg]`                                                                                                |
+| Full pipeline       | `python pipeline.py full --raw_folder [path_to_raw_image_folder] --aligned_folder [path_to_save_alignment_results] --exposures [exposure_time_1] [exposure_time_2] [exposure_time_3] ...`                 |
+
+---
+
+## Or you can run with the provided sample images:
+| Function            | Example Command                                                                                                                                                                                           |
+|---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Alignment           | `python3 pipeline.py align --input_folder ../Source_image --output_folder alignmented`                                                                                                                    |
+| HDR                 | `python3 pipeline.py hdr --images alignmented/aligned_0.jpg alignmented/aligned_1.jpg alignmented/aligned_2.jpg alignmented/aligned_3.jpg alignmented/aligned_4.jpg --exposures 0.02 0.008 0.003125 0.00099900099 0.00061500615` |
+| Tone mapping        | `python3 pipeline.py tonemap --input output.hdr --output result.jpg`                                                                                                                                      |
+                                                                   |
+
 
 ## Implementation of Roberston
 ### Problem Description
