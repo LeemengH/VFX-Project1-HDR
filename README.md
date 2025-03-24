@@ -40,7 +40,7 @@ cd VFX-Project1-HDR/src
 | Alignment           | `python3 pipeline.py align --input_folder ../Source_image --output_folder alignmented`                                                                                                                    |
 | HDR                 | `python3 pipeline.py hdr --images alignmented/aligned_0.jpg alignmented/aligned_1.jpg alignmented/aligned_2.jpg alignmented/aligned_3.jpg alignmented/aligned_4.jpg --exposures 0.02 0.008 0.003125 0.00099900099 0.00061500615` |
 | Tone mapping        | `python3 pipeline.py tonemap --input output.hdr --output result.jpg`                                                                                                                                      |
-                                                                   |
+| **Full pipeline** | `python3 pipeline.py full --raw_folder ../Source_image --aligned_folder alignmented --exposures 0.02 0.008 0.003125 0.00099900099 0.00061500615`                                                            |
 
 
 ## Implementation of Roberston
