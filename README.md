@@ -19,6 +19,16 @@ Report outline:
 
 5. Result 
 This method has several advantages: first, since the representation is non-parametric, the response function does not need to be assumed to have a shape described by some previously defined class of continuous functions; second, the formulation takes explicitly into account the sensor noise model; and third, the structure of the algorithm naturally uses all information available from image pixels for the estimation of response function and reconstruction of E.
+## How to run the code
+```bash=
+git clone "this_repo"
+cd this_repo/src
+mkdir input_images
+# Place all your photos in the input_images folder.
+bash run.sh
+# Aligned images are saved in the aligned_images folder,
+# and the final output is output_tonemapped.jpg.
+```
 ## Implementation of Roberston
 ### Problem Description
 Our goal is to reconstruct the $g$ (the inverse response curve) and then compute $E_i$  
