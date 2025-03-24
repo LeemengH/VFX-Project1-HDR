@@ -58,13 +58,11 @@ Robertson et al. exploit the Maximum Likelihood Method to estimate $g$. More for
 
 $P(E_i, g | Z_{ij}, \Delta t_j) \propto exp\{ \frac{-1}{2} \sum\limits_{ij} w(Z_{ij})(g(Z_{ij}) - E_i \Delta t_j))^2\}$
 
-where $w(.)$ refers to the hat weighting function (since $Z$ may overflow $(0 \sim 255)$, we need to add some adjustments, i.e., favor the numbers near the middle)
-
 Therefore, to maximize the likelihood, we need to minimize the expression:
 
 $\sum\limits_{ij} w(Z_{ij})(g(Z_{ij}) - E_i \Delta t_j)^2$
 
-Since the response function is not yet known, the weighting function (determined by differentiation of the response) is not known either. Rather than jointly attempting to estimate $w$, $g$, and $E$, the weighting function will be fixed _a priori_. (With so many unknowns, the estimation quickly becomes intractable, especially considering the dependence of $w$ on $g$.)
+Since the response function is not yet known, the weighting function (determined by differentiation of the response) is not known either. Rather than jointly attempting to estimate $w$, $g$, and $E$, the weighting function will be fixed _a priori_. (With so many unknowns, the estimation quickly becomes intractable, especially considering the dependence of $w$ on $g$.). Here we let $w(.)$ refer to the hat weighting function. (since $Z$ may overflow $(0 \sim 255)$, we need to add some adjustments, i.e., favor the numbers near the middle)
 
 ### Alternating Optimization (2 steps)
 
