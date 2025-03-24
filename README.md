@@ -22,7 +22,7 @@ This method has several advantages: first, since the representation is non-param
 ## How to run the code
 ```bash=
 git clone "this_repo"
-cd this_repo/src
+cd VFX-Project1-HDR/src
 mkdir input_images
 # Place all your photos in the input_images folder.
 bash run.sh
