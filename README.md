@@ -21,7 +21,7 @@ This repo is about NTU VFX 2025 Spring Project1.
 
 	5. Result
 
- 	6. Discuss 
+ 	6. Discussion 
 
 ## How to run the code
 ```bash=
@@ -215,7 +215,7 @@ To illustrate our results, we present the following image comparison in a 1x2 ta
   </tr>
 </table>
 
-### discuss
+### discussion
 Base on our result,The MTB alignment part does not significantly affect the quality of our images (the average displacement is within five pixels), which might be due to our already very precise image capture. 
 On the other hand, the tone mapping part shows a clear difference between our implementation and the open-source algorithm. Besides the overall yellowish tint in the images, there are noticeable issues in some details—for example, the "滾" character on the left is clearly overexposed, while the professional software can greatly restore the effect. 
 Adjusting parameters in our self-implemented algorithm is particularly challenging, as there are too many parameters to modify(for exmple the gamma value,kernal size,channal factor,space sigma ETC), making it very difficult to quantify the impact of each one. Additionally, the images we selected this time are not ideal, as they have low contrast between bright and dark areas. Choosing images with higher contrast could achieve a more pronounced HDR effect.
