@@ -55,12 +55,13 @@ def mapping(img):
     # out_corrected = np.where(out <= 0.0031308, 12.92 * out, 1.055 * np.power(out, 1/4) - 0.055)
     # outt = np.clip(out_corrected * 255, 0, 255)
     outt = outt.astype('uint8')
-    cv2.imwrite('tonemap_custom.png', outt)
+    # cv2.imwrite('tonemap_custom.png', outt)
+    return outt
 
-if __name__ == "__main__":
-    # 載入 圖片
-    temp = cv2.imread("output.hdr", cv2.IMREAD_UNCHANGED)
-    if temp is None:
-        print("影像讀取失敗，請確認路徑是否正確。")
-    else:
-        mapping(temp)
+# if __name__ == "__main__":
+#     # 載入 圖片
+#     temp = cv2.imread("output.hdr", cv2.IMREAD_UNCHANGED)
+#     if temp is None:
+#         print("影像讀取失敗，請確認路徑是否正確。")
+#     else:
+#         mapping(temp)

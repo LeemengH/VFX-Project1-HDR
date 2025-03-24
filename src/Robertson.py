@@ -1,6 +1,7 @@
 import numpy as np
 import time
 import cv2
+import argparse
 from multiprocessing import Pool, Manager
 
 def hat_weighting_function(z, z_min=0, z_max=255):
@@ -95,15 +96,18 @@ def tone_mapping(hdr_image):
     ldr = np.clip(ldr * 255, 0, 255).astype(np.uint8)
     return ldr
 
-def main():
-    """Main function to read images, process HDR, and save the output."""
-    # image_files = os.listdir("Aligned_Image")
-    image_files = ["aligned_0.jpg", "aligned_2.jpg", "aligned_3.jpg"]
-    images = [cv2.imread("Aligned_Image/"+img).astype(np.float32) for img in image_files]
-    images = [(img * 255).astype(np.uint8) for img in images]
-    delta_t = np.array([(1/60), (1/30), (1/15)])  # Example exposure times
+def robertson():
+    parser = argparse.ArgumentParser(description="HDR image processing from given images and exposures.")
+    parser.add_argument('--images', nargs='+', required=True, help="List of image filenames (e.g., aligned_0.jpg aligned_2.jpg aligned_3.jpg)")
+    parser.add_argument('--exposures', nargs='+', required=True, type=float, help="List of exposure times (e.g., 0.0167 0.0333 0.0667)")
+
+    args = parser.parse_args()
+
+    if len(args.images) != len(args.exposures):
+        print("Error: The number of images and exposures must match.")
+        return
     
-    """Compare with the built-in Library"""
+        """Compare with the built-in Library"""
     """
     calibrate = cv2.createCalibrate()
     hdr_opencv = calibrate.process(images, delta_t)
@@ -113,18 +117,18 @@ def main():
     cv2.imwrite("output_tonemapped.jpg", ldr_result)
     print("Tone-mapped image saved as output_tonemapped.jpg")
     =======End========="""
-
-    hdr_result = process_hdr(images, delta_t)
+    images = [cv2.imread(img).astype(np.float32) for img in args.images]
+    hdr_result = process_hdr(images, np.array(args.exposures, dtype=np.float32))
     cv2.imwrite("output.hdr", hdr_result.astype(np.float32))
     print("HDR image saved as output.hdr")
 
-    # Apply tone mapping and save as .jpg
     ldr_result = tone_mapping(hdr_result)
     cv2.imwrite("output_tonemapped.jpg", ldr_result)
     print("Tone-mapped image saved as output_tonemapped.jpg")
 
-if __name__ == "__main__":
-    main()
+
+# if __name__ == "__main__":
+#     robertson()
 
 """
 # Example usage (simulated data)
