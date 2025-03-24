@@ -110,12 +110,13 @@ Based on the image dimensions and the range of the log-transformed intensities, 
 To fuse the base layer with the details, a gamma parameter (set to 1.1) is used. The fused main channel is computed via an exponential transformation:
 
 $$
-\text{main\_channel} = \exp\left(\gamma \, \cdot \, \text{imgg} + (\log(\text{val}) - \text{imgg})\right)
+\text{main channel} = \exp\left(\gamma \cdot \text{imgg} + \left(\log(\text{val}) - \text{imgg}\right)\right)
 $$
+
 
 where $\text{val}$ represents the initial grayscale intensities. This approach effectively blends the smooth base with the high-frequency details extracted from the original log image.
 
-Next, the original normalized RGB channels are scaled by the ratio $\text{main\_channel} / \text{val}$ for each channel, thereby reintroducing color while preserving the tone mapping adjustments. A gain factor of 1.1 is then applied to boost overall brightness, with the results clipped to remain within the $[0, 1]$ range.
+Next, the original normalized RGB channels are scaled by the ratio $\text{main channel} / \text{val}$ for each channel, thereby reintroducing color while preserving the tone mapping adjustments. A gain factor of 1.1 is then applied to boost overall brightness, with the results clipped to remain within the $[0, 1]$ range.
 
 ### Gamma Correction and Final Output
 
