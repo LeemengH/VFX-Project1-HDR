@@ -59,12 +59,12 @@ Robertson et al. exploit the Maximum Likelihood Method to estimate $g$. More for
 $P(E_i, g | Z_{ij}, \Delta t_j) \propto exp\{ \frac{-1}{2} \sum\limits_{ij} w(Z_{ij})(g(Z_{ij}) - E_i \Delta t_j))^2\}$
 
 where $w(.)$ refers to the hat weighting function (since $Z$ may overflow $(0 \sim 255)$, we need to add some adjustments, i.e., favor the numbers near the middle)
-$w(z) = \left\{  
-\begin{array}{ll}  
-z - Z_{\min}, & \text{for } z \leq \frac{1}{2}(Z_{\min}+Z_{\max}) \\  
-Z_{\max} - z, & \text{for } z > \frac{1}{2}(Z_{\min}+Z_{\max})  
-\end{array}  
-\right.$
+$w(z) =
+\begin{cases} 
+  z - Z_{\min}, & \text{if } z \leq \frac{1}{2}(Z_{\min} + Z_{\max}) \\  
+  Z_{\max} - z, & \text{if } z > \frac{1}{2}(Z_{\min} + Z_{\max})  
+\end{cases}$
+
 
 Therefore, to maximize the likelihood, we need to minimize the expression:
 
@@ -180,6 +180,14 @@ We implemented a simple version of bilateral tone mapping and provided some anal
 ## Summary of parameters
 
 ## Result
+To illustrate our results, we present the following image comparison in a 1x2 table format:
+
+| Input Images (Aligned) | Result HDR (After Tone Mapping) |
+|------------------------|--------------------------------|
+| ![Image1](Aligned_Image/aligned_0.jpg)  |
+| ![Image2](Aligned_Image/aligned_1.jpg)  | ![Result](Result_image/GIMP_Mantiuk.png) |
+| ![Image3](Aligned_Image/aligned_2.jpg)  |
+| ![Image4](Aligned_Image/aligned_3.jpg)  |
 
 ## Reference:
 https://pages.cs.wisc.edu/~csverma/CS899_09/s00103ed1v01y200711cgr003.pdf
