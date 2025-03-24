@@ -58,25 +58,28 @@ Robertson et al. exploit the Maximum Likelihood Method to estimate ($g$). More f
 $$
 P(E_i, g | Z_{ij}, \Delta t_j) \propto exp\{ \frac{-1}{2} \sum\limits_{ij} w(Z_{ij})(g(Z_{ij}) - E_i \Delta t_j))^2\}
 $$
+
 where $w(.)$ refer to hat weighting function(Since the z may be overflow(0~255) therefore we need to add some  adjustment i.e fever the number near the middle)
 $$
 w(z) = \begin{cases} z - Z_{min} \ \ for\ z \le \frac{1}{2}(Z_{min}+Z_{max})\\ Z_{max} - z \ \ for\ z > \frac{1}{2}(Z_{min}+Z_{max}) \end{cases}
 $$
+
 Therefore, to maximize the likelihood we need to minimize the 
 $$
 \sum\limits_{ij} w(Z_{ij})(g(Z_{ij}) - E_i \Delta t_j))^2
 $$
+
 Since the response function is not yet known, the weighting function (determined by differentiation of the response) is not known either. Rather than jointly attempting to estimate w, g, and E, the weighting function will be fixed _a priori_. (With so many unknowns, the estimation quickly becomes intractable, especially considering the dependence of w on g().)
 
 ### Alternating Optimization(2 steps)
 
-Step1: assuming $g(Z_{ij})$ is known, estimate (optimize)for $\widehat{E_i}$
+- Step1: assuming $g(Z_{ij})$ is known, estimate (optimize)for $\widehat{E_i}$
 	- By first order condition:
 		$$
   		\widehat{E_i} = \frac{\sum\limits_{j} w(Z_{ij})g(Z_{ij})\Delta t_j}{\sum\limits_{j} w(Z_{ij})\Delta {t_j}^2}
     		$$
 
-Step2:  assuming $E_i$ is known, estimate (optimize) for $\widehat{g}(Z_{ij})$
+- Step2:  assuming $E_i$ is known, estimate (optimize) for $\widehat{g}(Z_{ij})$
 	- By first order condition:
 		$$
   		\widehat{g}(m) = \frac{1}{|\Phi_m|}\sum\limits_{ij\in E_m} E_i \Delta t_j \ \ , where \ \Phi_m = \{(i, j)| Z_{ij} = m\}
