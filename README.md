@@ -23,12 +23,14 @@ This method has several advantages: first, since the representation is non-param
 ```bash=
 git clone "this_repo"
 cd VFX-Project1-HDR/src
-mkdir input_images
-# Place all your photos in the input_images folder.
-bash run.sh
-# Aligned images are saved in the aligned_images folder,
-# and the final output is output_tonemapped.jpg.
 ```
+| 功能            | 指令範例                                                                                                                                                  |
+|---------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 只做對齊         | `python pipeline.py align --input_folder photo --output_folder aligned`                                                                             |
+| 只做 HDR       | `python pipeline.py hdr --images aligned/aligned_0.jpg aligned/aligned_1.jpg aligned/aligned_2.jpg --exposures 0.0167 0.0333 0.0667`               |
+| 只做 tone mapping | `python pipeline.py tonemap --input output.hdr --output tonemap_result.jpg`                                                                        |
+| 一鍵全部流程      | `python pipeline.py full --raw_folder photo --aligned_folder aligned --exposures 0.0167 0.0333 0.0667`                                              |
+
 ## Implementation of Roberston
 ### Problem Description
 Our goal is to reconstruct the $g$ (the inverse response curve) and then compute $E_i$  
