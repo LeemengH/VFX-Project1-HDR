@@ -26,10 +26,10 @@ cd VFX-Project1-HDR/src
 ```
 | 功能            | 指令範例                                                                                                                                                  |
 |---------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 只做對齊         | `python pipeline.py align --input_folder photo --output_folder aligned`                                                                             |
-| 只做 HDR       | `python pipeline.py hdr --images aligned/aligned_0.jpg aligned/aligned_1.jpg aligned/aligned_2.jpg --exposures 0.0167 0.0333 0.0667`               |
-| 只做 tone mapping | `python pipeline.py tonemap --input output.hdr --output tonemap_result.jpg`                                                                        |
-| 一鍵全部流程      | `python pipeline.py full --raw_folder photo --aligned_folder aligned --exposures 0.0167 0.0333 0.0667`                                              |
+| 只做對齊         | `python pipeline.py align --input_folder [path of folder of raw image] --output_folder [folder to save alignment result]`                                                                             |
+| 只做 HDR       | `python pipeline.py hdr --images [path of photo1] [path of photo2] [path of photo3] --exposures [scatter time of photo 1] [scatter time of photo 2] [scatter time of photo 3]`               |
+| 只做 tone mapping | `python pipeline.py tonemap --input [path of HDR] --output [file name ex. result.jpg]`                                                                        |
+| 一鍵全部流程      | `python pipeline.py full --raw_folder [path of folder raw image] --aligned_folder [folder to save alignment result] --exposures [scatter time of photo1] [scatter time of photo2] [scatter time of photo3]`                                              |
 
 ## Implementation of Roberston
 ### Problem Description
