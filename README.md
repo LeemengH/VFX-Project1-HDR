@@ -175,7 +175,7 @@ Our shooting device was the iPhone 16 Plus. To maintain fixed EV and ISO, we use
 To illustrate our results, we present the following image comparison in a 1x2 table format:
 
 Input Images(Original)| Input Images (Aligned) | Mantiuk Tone Mapping | Our bilateral tone mapping
-|-----------------------|------------------------|--------------------------------|-----------------|
+|-----------------------|------------------------|-----------------------------|--------------------|
 | ![Image1](Source_image/1626.jpg)   | ![Image1](Aligned_Image/aligned_0.jpg)  |
 | ![Image2](Source_image/1001.jpg)   | ![Image2](Aligned_Image/aligned_1.jpg)  | ![Result](Result_image/GIMP_Mantiuk.png) | ![Result](Result_image/Our_tone_mapping.jpg)
 | ![Image3](Source_image/320.jpg)    | ![Image3](Aligned_Image/aligned_2.jpg)  |
